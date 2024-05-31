@@ -2,21 +2,25 @@ package Cripto.Domain;
 
 public abstract class Coin implements CriptoCoin {
     private int currentValue;
-    private static int internalID;
+    public static int globalID;
 
     public Coin(int currentValue) {
         this.currentValue = setCurrentValue(currentValue);
-        internalID ++;
+        increaseCounter();
+    }
+
+    private static void increaseCounter() {
+        globalID ++;
     }
 
     public abstract String print();
 
-    @Override
+    /*@Override
     public String toString() {
         String output =
                 "This Coin value is currently at: " + getCurrentValue();
         return output;
-    }
+    }*/
 
     // Getters and Setters
     public int getCurrentValue() {

@@ -3,7 +3,7 @@ package Cripto.Domain;
 public class Ethereum extends Coin {
     private int contractNumber;
     private int id;
-    private static int globalID;
+    private static int internalID;
 
     public Ethereum(int currentValue) {
         super(currentValue);
@@ -12,26 +12,26 @@ public class Ethereum extends Coin {
         super(currentValue);
         this.contractNumber = contractNumber;
 
-        globalIDIncreaser();
-        this.id = globalID;
+        internalIDIncreaser();
+        this.id = internalID;
         System.out.println("The Ethereum Coin has been successfully created. The ID number is: " + this.id);
     }
 
-    private static void globalIDIncreaser() {
-       globalID ++;
+    private static void internalIDIncreaser() {
+        internalID ++;
     }
 
     @Override
     public String print() {
         String output =
                 "Ethereum Information:\n" +
-                        super.toString() + "\n" +
-                        "Ethereum ID: " + this.id + "\n" +
-                        "Contract Number: " + getContractNumber();
+                "Ethereum Value: " + super.getCurrentValue() + "\n" +
+                "Ethereum ID: " + this.id + "\n" +
+                "Contract Number: " + getContractNumber() + "\n";
         return output;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         String output =
                 "Ethereum Information:\n" +
@@ -39,7 +39,7 @@ public class Ethereum extends Coin {
                 "Ethereum ID: " + this.id + "\n" +
                 "Nodes Number: " + getContractNumber() + "\n";
         return output;
-    }
+    }*/
 
     // Interface Methods
 

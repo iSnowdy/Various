@@ -7,7 +7,7 @@ public abstract class Planta {
     private String type;
     private static int counter;
 
-    public enum PlantType{
+    public enum PlantType {
         ALIVE,
         DEAD;
 
@@ -22,6 +22,8 @@ public abstract class Planta {
         this.name = name;
         this.monthsOld = monthsOld;
         this.status = String.valueOf(PlantType.ALIVE);
+
+        PlantType.ALIVE.display();
 
         increaseCounter();
     }

@@ -3,7 +3,7 @@ package Cripto.Domain;
 public class Bitcoin extends Coin {
     private int nodesNumber;
     private int id;
-    private static int globalID;
+    private static int internalID;
 
     public Bitcoin(int currentValue) {
         super(currentValue);
@@ -12,27 +12,27 @@ public class Bitcoin extends Coin {
         super(currentValue);
         this.nodesNumber = nodesNumber;
 
-        globalIDIncreaser();
-        this.id = globalID;
+        internalIDIncreaser();
+        this.id = internalID;
         System.out.println("The BitCoin has been successfully created. The ID number is: " + this.id);
     }
 
-    private static void globalIDIncreaser() {
-        globalID ++;
+    private static void internalIDIncreaser() {
+        internalID ++;
     }
 
     @Override
     public String print() {
         String output =
                 "Bitcoin Information:\n" +
-                super.toString() + "\n" +
+                "Bitcoin Value: " + super.getCurrentValue() + "\n" +
                 "Bitcoin ID: " + this.id + "\n" +
-                "Nodes Number: " + getNodesNumber();
+                "Nodes Number: " + getNodesNumber() + "\n";
 
         return output;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         String output =
                 "Bitcoin Information:\n" +
@@ -41,7 +41,7 @@ public class Bitcoin extends Coin {
                         "Nodes Number: " + getNodesNumber() + "\n";
 
         return output;
-    }
+    }*/
 
     // Interface Methods
 
