@@ -1,10 +1,6 @@
 package Interinos.Domain;
 
-import java.util.*;
-
 public class Vacancy {
-    private int id;
-    private boolean allocated; // True = allocated
     public enum VacancyType {
         TEACHER,
         DOCTOR;
@@ -13,53 +9,25 @@ public class Vacancy {
             System.out.println("The Vacancy type is " + this);
         }
     }
-    private String vType;
+    private int id;
+    private boolean allocated; // True = allocated
+    private VacancyType vacancyType;
     private Person p;
 
     public Vacancy() {}
 
-    public Vacancy(int id, boolean allocated, VacancyType vacancyType) {
+    public Vacancy(int id, VacancyType vacancyType) {
         this.id = id;
-        // this.vacancies = new ArrayList<Vacancy>();
-
-        setEmptyVacancyType(vacancyType);
-
         setAllocated(false);
-    }
-
-    public Vacancy(int id, boolean allocated, Person person) {
-        this.id = id;
-        this.p = person;
-        // this.vacancies = new ArrayList<Vacancy>();
-
-        setAllocated(true);
-        setVacancyType();
-
-        // this.people = new ArrayList<Person>();
-    }
-
-    // What kind of Person are we dealing with
-
-    public void setEmptyVacancyType(VacancyType vacancyType) {
-        switch (vacancyType) {
-            case TEACHER -> setvType("TEACHER");
-            case DOCTOR -> setvType("DOCTOR");
-        }
-    }
-    private void setVacancyType() {
-        if (p instanceof Teacher) {
-            setvType("Teacher");
-            //System.out.println("Person type:" + getvType());
-        } else if (p instanceof Doctor) {
-            setvType("Doctor");
-            //System.out.println("Person type:" + getvType());
-        } else {
-            setvType("Unknown");
-            //System.out.println("Person type:" + getvType());
-        }
+        this.vacancyType = vacancyType;
     }
 
     // Getters and Setters
+
+    // ENUM getter
+    public VacancyType getVacancyType() {
+        return vacancyType;
+    }
 
     public int getId() {
         return id;
@@ -81,10 +49,41 @@ public class Vacancy {
         }
     }
 
-    public String getvType() {
-        return vType;
+
+    public Person getPerson() {
+        return p;
     }
-    public void setvType(String vType) {
-        this.vType = vType;
+    public void setPerson(Person person) {
+        this.p = person;
+        setAllocated(true);
+    }
+
+    @Override
+    public String toString() {
+        String texto =
+                "------------------------------------\n"
+                        + "ID Vacancy "+ this.getId()+"\n"
+                        + "Type: " + this.getVacancyType() + "\n";
+        if (this.isAllocated()) {
+            texto = texto + "Allocated: ALLOCATED\n" +
+                    "ID: "+ this.getPerson().getId() + "\n" +
+                    "Name: "+ this.getPerson().getFirst_name() + "\n" +
+                    "Sur Name: "+ this.getPerson().getSur_name() + "\n" +
+                    "Last Name: "+ this.getPerson().getLast_name() + "\n";
+
+            if (getVacancyType() == VacancyType.TEACHER) {
+                texto = texto +
+                        "Title: " + ((Teacher) this.getPerson()).getTitle() + "\n" +
+                        "Points: " + ((Teacher) this.getPerson()).getTitle() + "\n"
+                ;
+            } else {
+                texto = texto +
+                        "Speciality: " + ((Doctor) this.getPerson()).getSpeciality() + "\n" +
+                        "Days Worked: " + ((Doctor) this.getPerson()).getDaysWorked() + "\n";
+            }
+        } else {
+            texto = texto + "Allocated: NOT ALLOCATED\n";
+        }
+        return texto;
     }
 }

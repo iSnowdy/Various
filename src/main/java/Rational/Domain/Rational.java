@@ -37,53 +37,69 @@ public class Rational {
     }
 
     public String sum() {
-        int A = Character.getNumericValue(getNumberA().charAt(0));
-        int B = Character.getNumericValue(getNumberA().charAt(2));
-        int C = Character.getNumericValue(getNumberB().charAt(0));
-        int D = Character.getNumericValue(getNumberB().charAt(2));
+        String[] partsA = numberA.split("/");
+        String[] partsB = numberB.split("/");
+
+        int A = Integer.parseInt(partsA[0]);
+        int B = Integer.parseInt(partsA[1]);
+        int C = Integer.parseInt(partsB[0]);
+        int D = Integer.parseInt(partsB[1]);
 
         int newNum = (A * D) + (C * B);
         int newDenom = B * D;
-        int max = Math.max(newNum, newDenom);
+        int mcd = mcd(newNum, newDenom);
 
-        while (newNum % 2 == 0 && newDenom % 2 == 0) {
-            newNum /= 2;
-            newDenom /= 2;
-        }
-        setNumberC(newNum + "/" + newDenom);
-        return getNumberC();
+        newNum /= mcd;
+        newDenom /= mcd;
+
+        numberC = newNum + "/" + newDenom;
+        return numberC;
     }
 
     public String multiply() {
-        int A = Character.getNumericValue(getNumberA().charAt(0));
-        int B = Character.getNumericValue(getNumberA().charAt(2));
-        int C = Character.getNumericValue(getNumberB().charAt(0));
-        int D = Character.getNumericValue(getNumberB().charAt(2));
+        String[] partsA = numberA.split("/");
+        String[] partsB = numberB.split("/");
+
+        int A = Integer.parseInt(partsA[0]);
+        int B = Integer.parseInt(partsA[1]);
+        int C = Integer.parseInt(partsB[0]);
+        int D = Integer.parseInt(partsB[1]);
 
         int newNum = A * C;
         int newDenom = B * D;
+        int mcd = mcd(newNum, newDenom);
 
-        while (newNum % 2 == 0 && newDenom % 2 == 0) {
-            newNum /= 2;
-            newDenom /= 2;
-        }
-        setNumberC(newNum + "/" + newDenom);
-        return getNumberC();
+        newNum /= mcd;
+        newDenom /= mcd;
+
+        numberC = newNum + "/" + newDenom;
+        return numberC;
     }
 
     public String simplify() {
-        int C = Character.getNumericValue(getNumberB().charAt(0));
-        int D = Character.getNumericValue(getNumberB().charAt(2));
+        String[] partsB = numberB.split("/");
 
-        while (C % 2 == 0 && D % 2 == 0) {
-            C /= 2;
-            D /= 2;
-        }
-        setNumberB(String.valueOf(C) + "/" + String.valueOf(D));
-        setNumberA(getNumberB());
-        return getNumberA();
+        int C = Integer.parseInt(partsB[0]);
+        int D = Integer.parseInt(partsB[1]);
+        int mcd = mcd(C, D);
+
+        C /= mcd;
+        D /= mcd;
+
+        numberA = C + "/" + D;
+        numberB = numberA; // Overwrite numberB with the simplified value
+        return numberA;
     }
 
+    // Máximo común divisor
+    private int mcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
 
     // Getters & Setters
 

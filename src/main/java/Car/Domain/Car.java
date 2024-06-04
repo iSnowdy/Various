@@ -89,61 +89,39 @@ public class Car {
     }
 
     public void accelerate() {
-        System.out.println("Brum brum brum... To what speed would you like to" +
-                " set the Car? ");
-        int desiredSpeed = scanner.nextInt();
-        System.out.println("And for how long will the Car be at that speed? (seconds) ");
-        setTime(scanner.nextInt());
-
-        if (isEngineState()) {
-            while (getCurrentSpeed() < desiredSpeed) {
-                if (!avoidCat()) {
-                    if (getCurrentSpeed() < desiredSpeed) {
-                        System.out.println("Accelerating... current speed is " + getCurrentSpeed() + " and gear " + getCurrentGear());
-                        setCurrentSpeed(10);
-                        setCurrentGear(1);
-                    }
-                } else {
-                    System.out.println("------- Event -------");
-                }
-            }
+        if (!isEngineState()) {
+            System.out.println("The engine is not turned on.");
+            return;
         }
 
+        System.out.println("Brum brum brum... To what speed would you like to set the Car? ");
+        int desiredSpeed = scanner.nextInt();
+        System.out.println("And for how long will the Car be at that speed? (seconds) ");
+        int time = scanner.nextInt();
 
-        /*while (getCurrentSpeed() <= desiredSpeed) {
-            for (Map.Entry<Integer, Integer> entry : this.gearSpeed.entrySet()) {
-                int speedAsOfNow = getCurrentSpeed();
-                System.out.println("Accelerating... gear change to " + entry.getKey());
-                if (!(avoidCat())) {
-                    if (getCurrentSpeed() >= entry.getValue()) {
-                        this.setCurrentGear(entry.getKey());
-                        this.setCurrentSpeed(desiredSpeed);
+        while (getCurrentSpeed() < desiredSpeed) {
+            if (!avoidCat()) {
+                setCurrentSpeed(getCurrentSpeed() + 10);
+
+                // Check if gear needs to be changed
+                for (int gear : gearSpeed.keySet()) {
+                    if (getCurrentSpeed() <= gearSpeed.get(gear)) {
+                        setCurrentGear(gear);
+                        System.out.println("Accelerating... current speed is " + getCurrentSpeed() + " and gear " + getCurrentGear());
                         break;
-                    } else {
-                        setCurrentSpeed(30);
                     }
-                } else {
-                    setCurrentSpeed(desiredSpeed);
                 }
+
+                try {
+                    Thread.sleep(time * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("------- Event -------");
+                break;
             }
-        }*/
-        /*
-        // Iteration through the LinkedHashMap to search matches
-        while (getCurrentSpeed() <= desiredSpeed) {
-            for (Map.Entry<Integer, Integer> entry : this.gearSpeed.entrySet()) {
-                setCurrentSpeed(getCurrentGear() + 5);
-                System.out.println("Accelerating... gear change to " + entry.getKey());
-                if (avoidCat()) {
-                    break;
-                }
-                if (desiredSpeed <= entry.getValue()) {
-                    this.currentGear = entry.getKey();
-                    setCurrentSpeed(desiredSpeed);
-                    break;
-                }
-            }
-        }*/
-        // setCurrentSpeed(getCurrentSpeed() * 0 + (desiredSpeed));
+        }
         System.out.println("After accelerating to " + getCurrentSpeed() + " the Car gear is set to " + getCurrentGear());
         System.out.println("It will remain at this speed for " + getTime() + " seconds");
     }
