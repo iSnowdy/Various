@@ -7,7 +7,7 @@ import Interinos.Domain.Vacancy;
 
 import java.util.*;
 
-public class Main  {
+public class Main {
     public static void showVacancies(List<Vacancy> vacancyList) {
         System.out.println("================================");
         System.out.println("Vacancies allocated to TEACHERS");
@@ -91,9 +91,10 @@ public class Main  {
         };
 
         Object[][] doctors = {
-                {1, "Pepito", "Papito", "Pimpin", "Cardiólogo", 155},
-                {2, "Pablo", "Motos", "Motero", "Oftalmólogo", 54},
-                {3, "Laura", "Jac", "Into", "Cirujana", 26}
+                {1, "Pepito", "Papito", "Pimpin", "Cardiólogo", 42},
+                {2, "Pablo", "Motos", "Motero", "Oftalmólogo", 155},
+                {3, "Laura", "Jac", "Into", "Cirujana", 26},
+                {4, "Lopera", "Jasdl", "Jaz", "Neurocirujano", 999}
         };
 
         for (Object[] teach : teachers) {
